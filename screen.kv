@@ -1,0 +1,196 @@
+ScreenManagement:
+    MenuScreen:
+    GameScreen:
+        id:game_screen
+    HighlightScreen:
+        id:highlight_screen
+<MenuScreen>:
+    name:'main'
+    canvas:
+        Rectangle:
+            size: root.width, root.height
+            source: 'img_back.png'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: root.width/5,30,root.width/5,30
+        BoxLayout:
+            orientation: 'horizontal'
+            canvas:
+                Ellipse:
+                    size:root.width/5, root.width/5
+                    pos:root.width/10,root.height-root.height/2.5
+                    source:'drazen.jpg'
+                Ellipse:
+                    size:root.width/5, root.width/5
+                    pos:root.width/10 + root.width/5*1.5 ,root.height-root.height/2.5
+                    source:'vukoja.jpg'         
+                Ellipse:
+                    size:root.width/5, root.width/5
+                    pos:root.width/10 + root.width/5*3 ,root.height-root.height/2.5
+                    source:'igor.jpg'
+
+            size_hint: (1, 1)
+        Label:
+            size_hint: (1, 0.2)
+            text: '...shvatili su da vise ne ide...'
+            font_name:'Emulogic'
+            font_size: 20
+
+        Label:
+            size_hint: (1, 0.4)
+            text: 'ODMETNICI'
+            font_name:'Emulogic'
+            font_size: 50
+        Button:
+            text: 'Start Game'
+            font_name:'Emulogic'
+            font_size: 20
+            size_hint: (1, .4)
+            background_normal: 'normal_b.png'
+            background_down: 'down_b.png'
+            border: 30,30,30,30
+            on_release:
+                app.root.current = 'game_screen'
+                app.root.ids.game_screen.start_game()
+        Label:
+            size_hint: (1,0.15)
+        Button:
+            font_name:'Emulogic'
+            font_size: 20
+            background_normal: 'normal_b.png'
+            background_down: 'down_b.png'
+            border: 30,30,30,30           
+            size_hint: (1, .4)
+            on_release:app.root.ids.game_screen.close_game()
+            text: 'Quit'
+
+<GameScreen>:
+    name:'game_screen'
+    canvas.before:
+        Rectangle:
+            size: root.width, root.height
+            source: 'img_back.png'
+
+<HighlightScreen>:
+    name:'highlight_screen'
+    canvas.before:
+        Rectangle:
+            size: root.width, root.height
+            source: 'img_last.png'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: root.width/5,30,root.width/5,30
+
+        Label:
+            font_name:'Emulogic'
+            font_size: 20
+            text:"Callum Wilson je Bog"
+        Label:
+            font_name:'Emulogic'
+            font_size: 20
+            text:"Fantasy osvaja Drazen ili Jurica"
+        Label:
+            font_name:'Emulogic'
+            font_size: 20
+            text:"...to be continued..."
+        
+        Button:
+            text: 'Go Back'
+            font_name:'Emulogic'
+            font_size: 20
+            size_hint: 0.5,0.2
+            background_normal: 'normal_b.png'
+            background_down: 'down_b.png'
+            on_release:
+                app.root.current = 'main'
+                app.root.ids.game_screen.restart_game()
+
+    
+
+<PongBall>:
+    size: 150, 150
+    img: "drazen.jpg"
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
+            source:self.img
+
+<PongPaddle>:
+    size: self.parent.width/20,self.parent.height/3.5
+    canvas:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:'platform.png'
+
+<PongGame>:
+    ball: pong_ball
+    player1: player_left
+    player2: player_right
+    poruka: message
+    bodovi: points
+    canvas:
+        Rectangle:
+            pos: self.center_x-5, 0
+            size: 10, self.height
+
+    Label:
+        font_name:'Emulogic'
+        font_size: 15
+        center_x: root.width / 4
+        top: root.top - 10
+        text: "Bolja buducnost"
+
+    Label:
+        font_name:'Emulogic'
+        font_size: 15
+        center_x: root.width * 3 / 4
+        top: root.top - 10
+        text: "Hrvatska politika"
+
+    Label:
+        font_name:'Emulogic'
+        font_size: 60
+        center_x: root.width / 4
+        top: root.top - 70
+        text: str(root.player1.score)
+
+    Label:
+        font_name:'Emulogic'
+        font_size: 60
+        center_x: root.width * 3 / 4
+        top: root.top - 70
+        text: str(root.player2.score)
+
+    Label:
+        id: message
+        msg:"Level 1"
+        font_name:'Emulogic'
+        font_size: 30
+        center_x: root.width * 3 / 4
+        text: self.msg
+
+    Label:
+        id: points
+        amount:10000
+        font_name:'Emulogic'
+        font_size: 30
+        center_x: root.width * 1 / 4
+        text: "Bodovi: {}".format(self.amount)
+
+
+    PongBall:
+        id: pong_ball
+        center: self.parent.center
+
+    PongPaddle:
+        id: player_left
+        x: root.x
+        center_y: root.center_y
+
+    PongPaddle:
+        id: player_right
+        x: root.width-self.width
+        center_y: root.center_y
+
