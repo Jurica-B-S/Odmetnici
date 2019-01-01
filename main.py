@@ -12,7 +12,7 @@ from kivy.lang import Builder
 from kivy.core.text import LabelBase
 from kivy.core.audio import SoundLoader
 
-sound1 = SoundLoader.load('Brkovi- Opasno se drogiram.wav')
+sound1 = SoundLoader.load('applause.wav')
 sound2 = SoundLoader.load('bounce.wav')
 sound3 = SoundLoader.load('applause.wav')
 
